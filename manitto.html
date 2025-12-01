@@ -13,10 +13,9 @@
     padding: 0;
     background: #f0f4f8;
     display: flex;
-    justify-content: center; /* 수평 중앙 정렬 */
-    align-items: flex-start; /* 폼이 위에서부터 시작하도록 설정 */
+    justify-content: center;
+    align-items: flex-start;
     min-height: 100vh;
-    position: relative;
   }
 
   .bg {
@@ -24,10 +23,10 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100vh; /* 뷰포트 전체 높이를 사용 */
+    height: 60%; /* 화면 세로 기준 60%만 차지 */
     background-image: url('아버지.jpg');
-    background-size: cover; /* 이미지가 전체를 덮도록 조정 */
-    background-position: center top; /* 얼굴이 위쪽 중앙에 오도록 유지 */
+    background-size: auto 100%; /* 원본 비율 유지 */
+    background-position: center top; /* 얼굴이 위쪽 중앙에 오도록 */
     background-repeat: no-repeat;
     z-index: -2;
   }
@@ -35,25 +34,23 @@
   .overlay {
     position: fixed;
     top:0; left:0;
-    width:100%; 
-    height: 100vh; /* 오버레이도 전체 높이 사용 */
-    background: rgba(0,0,0,0.15);
+    width:100%; height:60%;
+    background: rgba(0,0,0,0.15); /* 살짝 어둡게 */
     z-index:-1;
   }
 
   .container {
-    max-width: 400px; /* PC 화면에서 너무 넓지 않게 조정 */
-    width: 90%; /* 모바일에서 좌우 여백 확보 */
-    margin-top: 75vh; /* 폼을 화면 하단 중앙으로 이동 (높이 75% 지점부터 시작) */
-    margin-bottom: 50px; /* 하단 여백 추가 */
-    background: rgba(255,255,255,0.95); /* 배경 투명도 약간 높여 가독성 증가 */
-    padding: 30px 25px;
+    max-width: 500px;
+    width: 95%;
+    margin: auto;
+    margin-top: 65%; /* 사진 아래로 이동 */
+    background: rgba(255,255,255,0.85);
+    padding: 28px 24px;
     border-radius: 25px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-    backdrop-filter: blur(5px); /* 블러 강도 약간 증가 */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    backdrop-filter: blur(3px);
     text-align: center;
     animation: fadeIn 0.8s ease-in-out;
-    z-index: 10; /* 폼이 배경 위에 확실히 보이도록 */
   }
 
   h2 {
@@ -70,12 +67,10 @@
     color: #555;
   }
 
-  /* 입력 필드에 width: 100% 및 box-sizing 적용 */
   input {
-    width: 100%; /* 부모 요소 너비를 꽉 채움 */
-    box-sizing: border-box; /* 패딩과 보더가 너비에 포함되도록 설정 */
+    max-width: 100%;
     padding: 14px;
-    margin-bottom: 15px;
+    margin-bottom: 14px;
     border-radius: 12px;
     border: 1px solid #ccc;
     font-size: 16px;
@@ -88,10 +83,8 @@
     box-shadow: 0 0 8px rgba(0,123,255,0.2);
   }
 
-  /* 버튼에 width: 100% 및 box-sizing 적용 */
   button {
-    width: 100%; /* 부모 요소 너비를 꽉 채움 */
-    box-sizing: border-box; /* 패딩과 보더가 너비에 포함되도록 설정 */
+    max-width: 100%;
     padding: 14px;
     border: none;
     border-radius: 12px;
@@ -146,13 +139,6 @@
     from {opacity:0; transform: translateY(-20px);}
     to {opacity:1; transform: translateY(0);}
   }
-
-  /* 작은 화면일 때 폼을 조금 더 위로 올려 배경이 덜 가려지게 조정 */
-  @media (max-width: 600px) {
-    .container {
-      margin-top: 60vh; 
-    }
-  }
 </style>
 </head>
 <body>
@@ -162,11 +148,9 @@
 <div class="container">
   <h2>신가네 마니또 개인 조회</h2>
 
-    <form onsubmit="checkManitto(); return false;"> 
-    <input type="text" id="username" placeholder="이름을 입력하세요" required />
-    <input type="password" id="password" placeholder="비밀번호를 입력하세요" required />
-    <button type="submit">조회/등록</button>
-  </form>
+  <input type="text" id="username" placeholder="이름을 입력하세요" />
+  <input type="password" id="password" placeholder="비밀번호를 입력하세요" />
+  <button onclick="checkManitto()">조회/등록</button>
 
   <div class="result" id="result"></div>
 
@@ -259,8 +243,7 @@
 
       result.innerHTML = `🎉 <span class='highlight'>최초 등록 완료!</span><br>
         당신의 마니또는 <span style="color:#007bff; font-weight:700;">${manittoMap[name]}</span><br>
-        개인 비밀번호는: <span class='highlight'>${newPassword}</span> 입니다.<br>
-          <span style="font-size:16px; font-weight:400; color:#555;">(개인 비밀번호를 꼭 기억해주세요!)</span>`;
+        개인 비밀번호는: <span class='highlight'>${newPassword}</span> 입니다.`;
 
       updatePasswordList();
       return;
@@ -291,3 +274,4 @@
 
 </body>
 </html>
+ 내가 짠 코드야 좀 여기서 수정해줄래
