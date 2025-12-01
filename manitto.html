@@ -23,10 +23,10 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 60%; /* 화면 세로 기준 60%만 차지 */
+    height: 60%;
     background-image: url('아버지.jpg');
-    background-size: auto 100%; /* 원본 비율 유지 */
-    background-position: center top; /* 얼굴이 위쪽 중앙에 오도록 */
+    background-size: auto 100%;
+    background-position: center top;
     background-repeat: no-repeat;
     z-index: -2;
   }
@@ -35,7 +35,7 @@
     position: fixed;
     top:0; left:0;
     width:100%; height:60%;
-    background: rgba(0,0,0,0.15); /* 살짝 어둡게 */
+    background: rgba(0,0,0,0.15);
     z-index:-1;
   }
 
@@ -43,7 +43,7 @@
     max-width: 500px;
     width: 95%;
     margin: auto;
-    margin-top: 65%; /* 사진 아래로 이동 */
+    margin-top: 65%;
     background: rgba(255,255,255,0.85);
     padding: 28px 24px;
     border-radius: 25px;
@@ -58,13 +58,6 @@
     font-weight: 700;
     margin-bottom: 20px;
     color: #333;
-  }
-
-  h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: 24px;
-    color: #555;
   }
 
   input {
@@ -150,7 +143,7 @@
 
   <input type="text" id="username" placeholder="이름을 입력하세요" />
   <input type="password" id="password" placeholder="비밀번호를 입력하세요" />
-  <button onclick="checkManitto()">조회/등록</button>
+  <button onclick="checkManitto()">조회</button>
 
   <div class="result" id="result"></div>
 
@@ -160,116 +153,61 @@
 </div>
 
 <script>
-  const people = [
-    "신관우", "우경호", "신은지",
-    "신성식", "최지인", "신이현", "신이아",
-    "신광식", "류진", "신선호", "신지아"
-  ];
+let manittoData = []; // JSON 데이터
+let passwordMap = {}; // 개인 비밀번호 관리
 
-  const families = {
-    family1: ["신관우", "우경호", "신은지"],
-    family2: ["신성식", "최지인", "신이현", "신이아"],
-    family3: ["신광식", "류진", "신선호", "신지아"]
-  };
+// JSON 파일 불러오기 (manitto_result.json 파일이 같은 경로에 있어야 함)
+fetch('manitto_result.json')
+  .then(response => response.json())
+  .then(data => {
+    manittoData = data.participants;
 
-  let familyMap = {};
-  for (const f in families) {
-    families[f].forEach(name => familyMap[name] = f);
-  }
-
-  let passwordMap = {};
-  let manittoMap = {};
-
-  function createPassword() {
-    return Math.random().toString(36).slice(2, 8);
-  }
-
-  function drawManitto() {
-    let assigned = false;
-
-    while (!assigned) {
-      let candidates = [...people];
-      let tempMap = {};
-      let success = true;
-
-      for (let person of people) {
-        let available = candidates.filter(p => p !== person && familyMap[p] !== familyMap[person]);
-        if (available.length === 0) {
-          success = false;
-          break;
-        }
-        let pick = available[Math.floor(Math.random() * available.length)];
-        tempMap[person] = pick;
-        candidates = candidates.filter(c => c !== pick);
-      }
-
-      if (success) {
-        manittoMap = tempMap;
-        assigned = true;
-      }
-    }
-  }
-
-  drawManitto();
-
-  const result = document.getElementById("result");
-  result.innerHTML = "<span class='highlight'>처음 조회 시에는 비밀번호에 0을 입력해주세요.</span>";
-
-  // URL 파라미터로 이름 자동 입력
-  const urlParams = new URLSearchParams(window.location.search);
-  const defaultName = urlParams.get('name');
-  if(defaultName && people.includes(defaultName)){
-      document.getElementById("username").value = defaultName;
-  }
-
-  function checkManitto() {
-    const name = document.getElementById("username").value.trim();
-    const pw = document.getElementById("password").value.trim();
-
-    if (!people.includes(name)) {
-      result.innerHTML = "<span class='highlight'>등록되지 않은 이름입니다.</span>";
-      return;
-    }
-
-    // 최초 조회
-    if (!passwordMap[name]) {
-      if (pw !== "0") {
-        result.innerHTML = "<span class='highlight'>처음 조회 시에는 비밀번호에 0을 입력해주세요.</span>";
-        return;
-      }
-
-      const newPassword = createPassword();
-      passwordMap[name] = newPassword;
-
-      result.innerHTML = `🎉 <span class='highlight'>최초 등록 완료!</span><br>
-        당신의 마니또는 <span style="color:#007bff; font-weight:700;">${manittoMap[name]}</span><br>
-        개인 비밀번호는: <span class='highlight'>${newPassword}</span> 입니다.`;
-
-      updatePasswordList();
-      return;
-    }
-
-    // 이후 조회
-    if (passwordMap[name] !== pw) {
-      result.innerHTML = "<span class='highlight'>비밀번호가 올바르지 않습니다.</span>";
-      return;
-    }
-
-    result.innerHTML = `🎁 당신의 마니또는 <br><br>
-      <span style="font-size:22px;color:#007bff;">${manittoMap[name]}</span> 입니다!`;
-  }
-
-  function updatePasswordList() {
-    const passwordDiv = document.getElementById("passwordList");
-    passwordDiv.innerHTML = "";
-    people.forEach(name => {
-      if (passwordMap[name]) {
-        const p = document.createElement("p");
-        p.textContent = `${name}: ${passwordMap[name]}`;
-        passwordDiv.appendChild(p);
-      }
+    // 비밀번호 맵 초기화 (관리용)
+    manittoData.forEach(p => {
+      if(p.password) passwordMap[p.name] = p.password;
     });
+
+    updatePasswordList();
+  })
+  .catch(err => {
+    console.error("JSON 파일 로드 실패:", err);
+    document.getElementById("result").innerText = "JSON 파일 불러오기 실패";
+  });
+
+function checkManitto() {
+  const name = document.getElementById("username").value.trim();
+  const pw = document.getElementById("password").value.trim();
+  const result = document.getElementById("result");
+
+  if(!manittoData.length){
+    result.innerText = "마니또 데이터가 준비되지 않았습니다.";
+    return;
   }
+
+  const participant = manittoData.find(p => p.name === name);
+  if(!participant){
+    result.innerHTML = "<span class='highlight'>등록되지 않은 이름입니다.</span>";
+    return;
+  }
+
+  if(participant.password !== pw){
+    result.innerHTML = "<span class='highlight'>비밀번호가 올바르지 않습니다.</span>";
+    return;
+  }
+
+  result.innerHTML = `🎁 당신의 마니또는 <br><br>
+      <span style="font-size:22px;color:#007bff;">${participant.manitto}</span> 입니다!`;
+}
+
+function updatePasswordList() {
+  const passwordDiv = document.getElementById("passwordList");
+  passwordDiv.innerHTML = "";
+  manittoData.forEach(p => {
+    const pEl = document.createElement("p");
+    pEl.textContent = `${p.name}: ${p.password || ""}`;
+    passwordDiv.appendChild(pEl);
+  });
+}
 </script>
 
 </body>

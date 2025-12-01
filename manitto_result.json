@@ -1,0 +1,15 @@
+{
+  "participants": [
+    {"name": "신관우", "manitto": "신이현", "password": "a1b2c3"},
+    {"name": "우경호", "manitto": "류진", "password": "d4e5f6"},
+    {"name": "신은지", "manitto": "신지아", "password": "g7h8i9"},
+    {"name": "신성식", "manitto": "신관우", "password": "j1k2l3"},
+    {"name": "최지인", "manitto": "우경호", "password": "m4n5o6"},
+    {"name": "신이현", "manitto": "신광식", "password": "p7q8r9"},
+    {"name": "신이아", "manitto": "신은지", "password": "s1t2u3"},
+    {"name": "신광식", "manitto": "신성식", "password": "v4w5x6"},
+    {"name": "류진", "manitto": "최지인", "password": "y7z8a9"},
+    {"name": "신선호", "manitto": "신이아", "password": "b1c2d3"},
+    {"name": "신지아", "manitto": "신이현", "password": "e4f5g6"}
+  ]
+}
