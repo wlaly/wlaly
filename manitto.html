@@ -5,140 +5,140 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>신가네 마니또 조회</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap');
 
-  body {
-    font-family: "Pretendard", sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f0f4f8;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-  }
+  body {
+    font-family: "Pretendard", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
 
-  .bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 60%; /* 화면 세로 기준 60%만 차지 */
-    background-image: url('아버지.jpg');
-    background-size: auto 100%; /* 원본 비율 유지 */
-    background-position: center top; /* 얼굴이 위쪽 중앙에 오도록 */
-    background-repeat: no-repeat;
-    z-index: -2;
-  }
+  .bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60%; /* 화면 세로 기준 60%만 차지 */
+    background-image: url('아버지.jpg');
+    background-size: auto 100%; /* 원본 비율 유지 */
+    background-position: center top; /* 얼굴이 위쪽 중앙에 오도록 */
+    background-repeat: no-repeat;
+    z-index: -2;
+  }
 
-  .overlay {
-    position: fixed;
-    top:0; left:0;
-    width:100%; height:60%;
-    background: rgba(0,0,0,0.15); /* 살짝 어둡게 */
-    z-index:-1;
-  }
+  .overlay {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:60%;
+    background: rgba(0,0,0,0.15); /* 살짝 어둡게 */
+    z-index:-1;
+  }
 
-  .container {
-    max-width: 500px;
-    width: 95%;
-    margin: auto;
-    margin-top: 65%; /* 사진 아래로 이동 */
-    background: rgba(255,255,255,0.85);
-    padding: 28px 24px;
-    border-radius: 25px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    backdrop-filter: blur(3px);
-    text-align: center;
-    animation: fadeIn 0.8s ease-in-out;
-  }
+  .container {
+    max-width: 500px;
+    width: 95%;
+    margin: auto;
+    margin-top: 65%; /* 사진 아래로 이동 */
+    background: rgba(255,255,255,0.85);
+    padding: 28px 24px;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    backdrop-filter: blur(3px);
+    text-align: center;
+    animation: fadeIn 0.8s ease-in-out;
+  }
 
-  h2 {
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: #333;
-  }
+  h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #333;
+  }
 
-  h3 {
-    font-size: 18px;
-    font-weight: 600;
-    margin-top: 24px;
-    color: #555;
-  }
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 24px;
+    color: #555;
+  }
 
-  input {
-    max-width: 100%;
-    padding: 14px;
-    margin-bottom: 14px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    outline: none;
-    transition: 0.2s;
-  }
+  input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 14px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    transition: 0.2s;
+  }
 
-  input:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 8px rgba(0,123,255,0.2);
-  }
+  input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0,123,255,0.2);
+  }
 
-  button {
-    max-width: 100%;
-    padding: 14px;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(90deg,#4a90e2,#007bff);
-    color: white;
-    font-size: 17px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-  }
+  button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg,#4a90e2,#007bff);
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+  }
 
-  button:hover {
-    background: linear-gradient(90deg,#007bff,#005fcc);
-  }
+  button:hover {
+    background: linear-gradient(90deg,#007bff,#005fcc);
+  }
 
-  .result {
-    margin-top: 22px;
-    font-size: 18px;
-    font-weight: 600;
-    color: #333;
-    line-height: 1.5;
-    min-height: 60px;
-  }
+  .result {
+    margin-top: 22px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.5;
+    min-height: 60px;
+  }
 
-  .highlight {
-    color: #28a745;
-    font-weight: 700;
-    font-size: 20px;
-  }
+  .highlight {
+    color: #28a745;
+    font-weight: 700;
+    font-size: 20px;
+  }
 
-  #passwordList {
-    margin-top: 16px;
-    font-size: 15px;
-    line-height: 1.5;
-    color: #555;
-    text-align: left;
-    max-height: 180px;
-    overflow-y: auto;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 12px;
-    background: #f9f9f9;
-  }
+  #passwordList {
+    margin-top: 16px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #555;
+    text-align: left;
+    max-height: 180px;
+    overflow-y: auto;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    background: #f9f9f9;
+  }
 
-  hr {
-    margin: 22px 0;
-    border: none;
-    border-top: 1px solid #ddd;
-  }
+  hr {
+    margin: 22px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
 
-  @keyframes fadeIn {
-    from {opacity:0; transform: translateY(-20px);}
-    to {opacity:1; transform: translateY(0);}
-  }
+  @keyframes fadeIn {
+    from {opacity:0; transform: translateY(-20px);}
+    to {opacity:1; transform: translateY(0);}
+  }
 </style>
 </head>
 <body>
@@ -146,132 +146,131 @@
 <div class="overlay"></div>
 
 <div class="container">
-  <h2>신가네 마니또 개인 조회</h2>
+  <h2>신가네 마니또 개인 조회</h2>
 
-  <input type="text" id="username" placeholder="이름을 입력하세요" />
-  <input type="password" id="password" placeholder="비밀번호를 입력하세요" />
-  <button onclick="checkManitto()">조회/등록</button>
+  <input type="text" id="username" placeholder="이름을 입력하세요" />
+  <input type="password" id="password" placeholder="비밀번호를 입력하세요" />
+  <button onclick="checkManitto()">조회/등록</button>
 
-  <div class="result" id="result"></div>
+  <div class="result" id="result"></div>
 
-  <hr>
-  <h3>참여자 비밀번호 확인용 (관리용)</h3>
-  <div id="passwordList"></div>
+  <hr>
+  <h3>참여자 비밀번호 확인용 (관리용)</h3>
+  <div id="passwordList"></div>
 </div>
 
 <script>
-  const people = [
-    "신관우", "우경호", "신은지",
-    "신성식", "최지인", "신이현", "신이아",
-    "신광식", "류진", "신선호", "신지아"
-  ];
+  const people = [
+    "신관우", "우경호", "신은지",
+    "신성식", "최지인", "신이현", "신이아",
+    "신광식", "류진", "신선호", "신지아"
+  ];
 
-  const families = {
-    family1: ["신관우", "우경호", "신은지"],
-    family2: ["신성식", "최지인", "신이현", "신이아"],
-    family3: ["신광식", "류진", "신선호", "신지아"]
-  };
+  const families = {
+    family1: ["신관우", "우경호", "신은지"],
+    family2: ["신성식", "최지인", "신이현", "신이아"],
+    family3: ["신광식", "류진", "신선호", "신지아"]
+  };
 
-  let familyMap = {};
-  for (const f in families) {
-    families[f].forEach(name => familyMap[name] = f);
-  }
+  let familyMap = {};
+  for (const f in families) {
+    families[f].forEach(name => familyMap[name] = f);
+  }
 
-  let passwordMap = {};
-  let manittoMap = {};
+  let passwordMap = {};
+  let manittoMap = {};
 
-  function createPassword() {
-    return Math.random().toString(36).slice(2, 8);
-  }
+  function createPassword() {
+    return Math.random().toString(36).slice(2, 8);
+  }
 
-  function drawManitto() {
-    let assigned = false;
+  function drawManitto() {
+    let assigned = false;
 
-    while (!assigned) {
-      let candidates = [...people];
-      let tempMap = {};
-      let success = true;
+    while (!assigned) {
+      let candidates = [...people];
+      let tempMap = {};
+      let success = true;
 
-      for (let person of people) {
-        let available = candidates.filter(p => p !== person && familyMap[p] !== familyMap[person]);
-        if (available.length === 0) {
-          success = false;
-          break;
-        }
-        let pick = available[Math.floor(Math.random() * available.length)];
-        tempMap[person] = pick;
-        candidates = candidates.filter(c => c !== pick);
-      }
+      for (let person of people) {
+        let available = candidates.filter(p => p !== person && familyMap[p] !== familyMap[person]);
+        if (available.length === 0) {
+          success = false;
+          break;
+        }
+        let pick = available[Math.floor(Math.random() * available.length)];
+        tempMap[person] = pick;
+        candidates = candidates.filter(c => c !== pick);
+      }
 
-      if (success) {
-        manittoMap = tempMap;
-        assigned = true;
-      }
-    }
-  }
+      if (success) {
+        manittoMap = tempMap;
+        assigned = true;
+      }
+    }
+  }
 
-  drawManitto();
+  drawManitto();
 
-  const result = document.getElementById("result");
-  result.innerHTML = "<span class='highlight'>처음 조회 시에는 비밀번호에 0을 입력해주세요.</span>";
+  const result = document.getElementById("result");
+  result.innerHTML = "<span class='highlight'>처음 조회 시에는 비밀번호에 0을 입력해주세요.</span>";
 
-  // URL 파라미터로 이름 자동 입력
-  const urlParams = new URLSearchParams(window.location.search);
-  const defaultName = urlParams.get('name');
-  if(defaultName && people.includes(defaultName)){
-      document.getElementById("username").value = defaultName;
-  }
+  // URL 파라미터로 이름 자동 입력
+  const urlParams = new URLSearchParams(window.location.search);
+  const defaultName = urlParams.get('name');
+  if(defaultName && people.includes(defaultName)){
+      document.getElementById("username").value = defaultName;
+  }
 
-  function checkManitto() {
-    const name = document.getElementById("username").value.trim();
-    const pw = document.getElementById("password").value.trim();
+  function checkManitto() {
+    const name = document.getElementById("username").value.trim();
+    const pw = document.getElementById("password").value.trim();
 
-    if (!people.includes(name)) {
-      result.innerHTML = "<span class='highlight'>등록되지 않은 이름입니다.</span>";
-      return;
-    }
+    if (!people.includes(name)) {
+      result.innerHTML = "<span class='highlight'>등록되지 않은 이름입니다.</span>";
+      return;
+    }
 
-    // 최초 조회
-    if (!passwordMap[name]) {
-      if (pw !== "0") {
-        result.innerHTML = "<span class='highlight'>처음 조회 시에는 비밀번호에 0을 입력해주세요.</span>";
-        return;
-      }
+    // 최초 조회
+    if (!passwordMap[name]) {
+      if (pw !== "0") {
+        result.innerHTML = "<span class='highlight'>처음 조회 시에는 비밀번호에 0을 입력해주세요.</span>";
+        return;
+      }
 
-      const newPassword = createPassword();
-      passwordMap[name] = newPassword;
+      const newPassword = createPassword();
+      passwordMap[name] = newPassword;
 
-      result.innerHTML = `🎉 <span class='highlight'>최초 등록 완료!</span><br>
-        당신의 마니또는 <span style="color:#007bff; font-weight:700;">${manittoMap[name]}</span><br>
-        개인 비밀번호는: <span class='highlight'>${newPassword}</span> 입니다.`;
+      result.innerHTML = `🎉 <span class='highlight'>최초 등록 완료!</span><br>
+        당신의 마니또는 <span style="color:#007bff; font-weight:700;">${manittoMap[name]}</span><br>
+        개인 비밀번호는: <span class='highlight'>${newPassword}</span> 입니다.`;
 
-      updatePasswordList();
-      return;
-    }
+      updatePasswordList();
+      return;
+    }
 
-    // 이후 조회
-    if (passwordMap[name] !== pw) {
-      result.innerHTML = "<span class='highlight'>비밀번호가 올바르지 않습니다.</span>";
-      return;
-    }
+    // 이후 조회
+    if (passwordMap[name] !== pw) {
+      result.innerHTML = "<span class='highlight'>비밀번호가 올바르지 않습니다.</span>";
+      return;
+    }
 
-    result.innerHTML = `🎁 당신의 마니또는 <br><br>
-      <span style="font-size:22px;color:#007bff;">${manittoMap[name]}</span> 입니다!`;
-  }
+    result.innerHTML = `🎁 당신의 마니또는 <br><br>
+      <span style="font-size:22px;color:#007bff;">${manittoMap[name]}</span> 입니다!`;
+  }
 
-  function updatePasswordList() {
-    const passwordDiv = document.getElementById("passwordList");
-    passwordDiv.innerHTML = "";
-    people.forEach(name => {
-      if (passwordMap[name]) {
-        const p = document.createElement("p");
-        p.textContent = `${name}: ${passwordMap[name]}`;
-        passwordDiv.appendChild(p);
-      }
-    });
-  }
+  function updatePasswordList() {
+    const passwordDiv = document.getElementById("passwordList");
+    passwordDiv.innerHTML = "";
+    people.forEach(name => {
+      if (passwordMap[name]) {
+        const p = document.createElement("p");
+        p.textContent = `${name}: ${passwordMap[name]}`;
+        passwordDiv.appendChild(p);
+      }
+    });
+  }
 </script>
 
 </body>
 </html>
- 내가 짠 코드야 좀 여기서 수정해줄래
