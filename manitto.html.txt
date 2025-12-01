@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>신가네 마니또 조회</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;700&display=swap');
+
+  body {
+    font-family: "Pretendard", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+
+  .bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background-image: url('아버지.jpg');
+    background-size: auto 100%;
+    background-position: center top;
+    background-repeat: no-repeat;
+    z-index: -2;
+  }
+
+  .overlay {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:60%;
+    background: rgba(0,0,0,0.15);
+    z-index:-1;
+  }
+
+  .container {
+    max-width: 500px;
+    width: 95%;
+    margin: auto;
+    margin-top: 65%;
+    background: rgba(255,255,255,0.85);
+    padding: 28px 24px;
+    border-radius: 25px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    backdrop-filter: blur(3px);
+    text-align: center;
+    animation: fadeIn 0.8s ease-in-out;
+  }
+
+  h2 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 14px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    transition: 0.2s;
+  }
+
+  input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0,123,255,0.2);
+  }
+
+  button {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg,#4a90e2,#007bff);
+    color: white;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: linear-gradient(90deg,#007bff,#005fcc);
+  }
+
+  .result {
+    margin-top: 22px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    line-height: 1.5;
+    min-height: 60px;
+  }
+
+  .highlight {
+    color: #28a745;
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  #passwordList {
+    margin-top: 16px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #555;
+    text-align: left;
+    max-height: 180px;
+    overflow-y: auto;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    background: #f9f9f9;
+  }
+
+  hr {
+    margin: 22px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+
+  @keyframes fadeIn {
+    from {opacity:0; transform: translateY(-20px);}
+    to {opacity:1; transform: translateY(0);}
+  }
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="overlay"></div>
+
+<div class="container">
+  <h2>신가네 마니또 개인 조회</h2>
+
+  <input type="text" id="username" placeholder="이름을 입력하세요" />
+  <input type="password" id="password" placeholder="비밀번호를 입력하세요" />
+  <button onclick="checkManitto()">조회</button>
+
+  <div class="result" id="result"></div>
+
+  <hr>
+  <h3>참여자 비밀번호 확인용 (관리용)</h3>
+  <div id="passwordList"></div>
+</div>
+
+<script>
+let manittoData = []; // JSON 데이터
+let passwordMap = {}; // 개인 비밀번호 관리
+
+// JSON 파일 불러오기 (manitto_result.json 파일이 같은 경로에 있어야 함)
+fetch('manitto_result.json')
+  .then(response => response.json())
+  .then(data => {
+    manittoData = data.participants;
+
+    // 비밀번호 맵 초기화 (관리용)
+    manittoData.forEach(p => {
+      if(p.password) passwordMap[p.name] = p.password;
+    });
+
+    updatePasswordList();
+  })
+  .catch(err => {
+    console.error("JSON 파일 로드 실패:", err);
+    document.getElementById("result").innerText = "JSON 파일 불러오기 실패";
+  });
+
+function checkManitto() {
+  const name = document.getElementById("username").value.trim();
+  const pw = document.getElementById("password").value.trim();
+  const result = document.getElementById("result");
+
+  if(!manittoData.length){
+    result.innerText = "마니또 데이터가 준비되지 않았습니다.";
+    return;
+  }
+
+  const participant = manittoData.find(p => p.name === name);
+  if(!participant){
+    result.innerHTML = "<span class='highlight'>등록되지 않은 이름입니다.</span>";
+    return;
+  }
+
+  if(participant.password !== pw){
+    result.innerHTML = "<span class='highlight'>비밀번호가 올바르지 않습니다.</span>";
+    return;
+  }
+
+  result.innerHTML = `🎁 당신의 마니또는 <br><br>
+      <span style="font-size:22px;color:#007bff;">${participant.manitto}</span> 입니다!`;
+}
+
+function updatePasswordList() {
+  const passwordDiv = document.getElementById("passwordList");
+  passwordDiv.innerHTML = "";
+  manittoData.forEach(p => {
+    const pEl = document.createElement("p");
+    pEl.textContent = `${p.name}: ${p.password || ""}`;
+    passwordDiv.appendChild(pEl);
+  });
+}
+</script>
+
+</body>
+</html>
